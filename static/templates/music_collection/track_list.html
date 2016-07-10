@@ -1,0 +1,38 @@
+<!-- http://stackoverflow.com/a/5759160/2610955 is used in the number of stars construction -->
+
+<html>
+    <head>
+        <title> Sample Tracks </title>
+        {% load staticfiles %}
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <ul>
+                        {% for obj in object_list %}
+                            <li> <h4> {{ obj.Title }} (
+                                {% for genre in obj.Genre.all %}
+                                    {{ genre.Title }}
+                                    {% if not forloop.last %}
+                                        |
+                                    {% endif %}
+                                {% endfor %}
+                                )
+                                with ratings of
+                                {% for x in "xxxxx" %}
+                                    {% if forloop.counter <= obj.Rating %}
+                                        *
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                {% endfor %}
+                            </h4></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
