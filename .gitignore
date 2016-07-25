@@ -50,3 +50,7 @@ coverage.xml
 docs/_build/
 
 *sqlite3
+
+*~
+*#
+*#*
