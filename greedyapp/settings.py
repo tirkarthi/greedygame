@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import json
+from config import config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@lrvna7*%br)^_f^_)5d!9jz#gxq^n6a*utopy_fai0c570377'
+SECRET_KEY = config['secret']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -77,12 +79,7 @@ WSGI_APPLICATION = 'greedyapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+DATABASES = config['databases']
 
 
 # Internationalization
@@ -108,8 +105,11 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
+print(tuple(config['rest_framework']['DEFAULT_PERMISSION_CLASSES'].split(',')))
+
+
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
-    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
-    'PAGE_SIZE': 3
+ "DEFAULT_PERMISSION_CLASSES" : tuple(config['rest_framework']['DEFAULT_PERMISSION_CLASSES'].split(',')),
+ "DEFAULT_FILTER_BACKENDS" : tuple(config['rest_framework']['DEFAULT_FILTER_BACKENDS'].split(',')),
+ "PAGE_SIZE" : config['rest_framework']['PAGE_SIZE']
 }
