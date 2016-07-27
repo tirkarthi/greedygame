@@ -30,7 +30,12 @@ var TrackItemView = Backbone.View.extend({
 	    }
         }
         this.render();
-	$('.tags', this.$el).tagsInput({height: '40px', width: '250px'});
+        // Todo : Error occurs on first save. But works. 
+        try {
+	    $('.tags', this.$el).tagsInput({height: '40px', width: '250px'});
+        } catch (e) {
+            console.log("Error on save");
+        }
     },
 
     track_tpl: _.template($('#item-template').html()),
