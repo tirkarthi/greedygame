@@ -5,6 +5,7 @@ from .views import *
 
 
 urlpatterns = [
+    url(r'^$', index, name="track-index"),
     url(r'api/tracks/$', TrackViewSet.as_view()),
     url(r'api/genres/$', GenreViewSet.as_view()),
     url(r'api/tracks/(?P<pk>[0-9]+)$', TrackViewSetDetail.as_view()),

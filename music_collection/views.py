@@ -1,15 +1,17 @@
-from rest_framework import generics, status
+from rest_framework import generics, status, viewsets
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import HttpResponse
-from django.shortcuts import render
-from .models import *
-from .serializers import *
-from rest_framework import viewsets, generics
+from django.shortcuts import render, redirect
 from django.views.generic import View, ListView, DetailView
 from django.conf import settings
 
+from .models import *
+from .serializers import *
+
+def index(request):
+    return redirect('track-list')
 
 class TracksView(ListView):
 

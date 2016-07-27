@@ -35,7 +35,7 @@ else:
 
     DEBUG = config.get('debug', False)
 
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+    ALLOWED_HOSTS = ['127.0.0.1', '52.24.90.19', 'localhost']
 
 
     # Application definition
