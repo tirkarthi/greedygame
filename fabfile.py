@@ -57,6 +57,9 @@ def reload_gunicorn(pid):
 def start_gunicorn():
     sudo('supervisorctl restart greedygame')
 
+def collect_static():
+    run('python manage.py collectstatic --noinput')
+
 # http://stackoverflow.com/questions/1180411/activate-a-virtualenv-via-fabric-as-deploy-user
 @_contextmanager
 def virtualenv():
@@ -68,6 +71,7 @@ def deploy():
     with virtualenv():
         pull()
         install_requirements()
+        collect_static()
         migrate()
         pid = get_gunicorn_pid()
         if pid:

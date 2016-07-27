@@ -35,7 +35,7 @@ else:
 
     DEBUG = config.get('debug', False)
 
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
     # Application definition
@@ -112,6 +112,8 @@ else:
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, "static"),
     )
+
+    STATIC_ROOT = '/home/ubuntu/static/'
 
     REST_FRAMEWORK = {
         "DEFAULT_PERMISSION_CLASSES" : tuple(config['rest_framework']['DEFAULT_PERMISSION_CLASSES'].split(',')),
