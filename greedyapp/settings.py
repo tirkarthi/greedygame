@@ -17,99 +17,104 @@ from config import config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Settings for Travis
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
+if "TRAVIS" in os.environ:
+    SECRET_KEY = "V&uqckyogs4p4rh#@n6j*$^emdpjv+r_kp8fqn)z0engsq7(vk("
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": "./db.sqlite3"
+        }
+    }
+    REST_FRAMEWORK = {
+        'PAGE_SIZE' : 3
+    }
+else:
+    SECRET_KEY = config['secret']
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config['secret']
+    DEBUG = config.get('debug', False)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = []
 
 
-# Application definition
+    # Application definition
 
-INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'music_collection',
-    'rest_framework',
-    'django_extensions'
-)
+    INSTALLED_APPS = (
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'music_collection',
+        'rest_framework',
+        'django_extensions'
+    )
 
-MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-)
+    MIDDLEWARE_CLASSES = (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'django.middleware.security.SecurityMiddleware',
+    )
 
-ROOT_URLCONF = 'greedyapp.urls'
+    ROOT_URLCONF = 'greedyapp.urls'
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR + "/static/templates/"],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [ BASE_DIR + "/static/templates/"],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
         },
-    },
-]
+    ]
 
-WSGI_APPLICATION = 'greedyapp.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = config['databases']
+    WSGI_APPLICATION = 'greedyapp.wsgi.application'
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
+    # Database
+    # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
+    DATABASES = config['databases']
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
+    # Internationalization
+    # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-STATIC_URL = '/static/'
+    LANGUAGE_CODE = 'en-us'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
+    TIME_ZONE = 'UTC'
 
-print(tuple(config['rest_framework']['DEFAULT_PERMISSION_CLASSES'].split(',')))
+    USE_I18N = True
+
+    USE_L10N = True
+
+    USE_TZ = True
 
 
-REST_FRAMEWORK = {
- "DEFAULT_PERMISSION_CLASSES" : tuple(config['rest_framework']['DEFAULT_PERMISSION_CLASSES'].split(',')),
- "DEFAULT_FILTER_BACKENDS" : tuple(config['rest_framework']['DEFAULT_FILTER_BACKENDS'].split(',')),
- "PAGE_SIZE" : config['rest_framework']['PAGE_SIZE']
-}
+    # Static files (CSS, JavaScript, Images)
+    # https://docs.djangoproject.com/en/1.8/howto/static-files/
+
+    STATIC_URL = '/static/'
+
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, "static"),
+    )
+
+    REST_FRAMEWORK = {
+        "DEFAULT_PERMISSION_CLASSES" : tuple(config['rest_framework']['DEFAULT_PERMISSION_CLASSES'].split(',')),
+        "DEFAULT_FILTER_BACKENDS" : tuple(config['rest_framework']['DEFAULT_FILTER_BACKENDS'].split(',')),
+        "PAGE_SIZE" : config['rest_framework']['PAGE_SIZE']
+    }
